@@ -3,39 +3,16 @@ package calculadora;
 
 public class Algoritmos {
     
-    private boolean esOperando(String s){
-        boolean res;
-        
-        try{
-            Double.parseDouble(s);
-            res=true;
-        }catch(Exception e){
-            res=false;
-        }
-        return res;
-    }
-    
     private static int getPrioridad(char elem){
-        int prioridad;
         
-        switch(elem){
-            case '+':
-                prioridad=1;
-                break;
-            case '-':
-                prioridad=1;
-                break;
-            case '*':
-                prioridad=2;
-                break;
-            case '/':
-                prioridad=2;
-                break;
-            default :
-                prioridad=-1;
-                break;
-        }
-        return prioridad;
+        return switch (elem) {
+            case '+' -> 1;
+            case '-' -> 1;
+            case '*' -> 2;
+            case '/' -> 2;
+            case '^' -> 3;
+            default -> -1;
+        };
     }
     
     public static String infijaAPostfija(String infija){
@@ -48,7 +25,7 @@ public class Algoritmos {
         pila=new PilaA();
         for(int i=0; i<infija.length(); i++){
             elem=infija.charAt(i);
-            if(elem>47&&elem<58)
+            if(elem>47&&elem<58 || elem=='.')
                 postfija+=elem;
             else
                 if(elem=='(')
@@ -61,7 +38,7 @@ public class Algoritmos {
                     }else{
                         prioridad=getPrioridad(elem);
                         if(prioridad!=-1){
-                            while(!pila.isEmpty() && prioridad<=getPrioridad((char)pila.peek()))
+                            while(!pila.isEmpty() && prioridad<=getPrioridad((char) pila.peek()))
                                 postfija+=pila.pop();
                             pila.push(elem);
                         }
