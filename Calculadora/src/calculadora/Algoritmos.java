@@ -47,5 +47,51 @@ public class Algoritmos {
         while(!pila.isEmpty())
             postfija+=pila.pop();
         return postfija;
-    }    
+    }  
+     public static boolean analizaParentesis (String analiza){
+        boolean resp=true;
+        PilaA <Character> almacena = new PilaA();
+        int contador=0;
+        int i=0;
+        
+           while (i<analiza.length()) {  
+
+                if(analiza.charAt(i)=='(')
+                    almacena.push('(');                              
+
+                else 
+                    if  (analiza.charAt(i)==')')  
+                        if (!almacena.isEmpty())
+                            almacena.pop();
+
+                        else {
+                            almacena.push(')');
+                            break;
+                        }
+           
+                i++;
+            }
+            if(almacena.isEmpty())
+                resp= true; 
+             else 
+                resp= false;
+       
+        return resp;
+    }
+    public static boolean revisaSignos(String revisa){
+        boolean resp=true;
+        char ant;
+        int i=0;
+        
+        while(i<revisa.length()-1 && resp){
+            
+            if(revisa.charAt(i)=='+'||revisa.charAt(i)=='-'||revisa.charAt(i)=='*'||revisa.charAt(i)=='/')
+                i++;
+                if(revisa.charAt(i)=='+'||revisa.charAt(i)=='-'||revisa.charAt(i)=='*'||revisa.charAt(i)=='/')
+                    resp=false;
+            i++;      
+        }
+        
+        return resp;   
+    }
 }
